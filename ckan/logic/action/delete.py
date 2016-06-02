@@ -1,5 +1,6 @@
 '''API functions for deleting data from CKAN.'''
 
+import datetime
 import sqlalchemy as sqla
 
 import ckan.logic
@@ -70,6 +71,11 @@ def package_delete(context, data_dict):
     rev = model.repo.new_revision()
     rev.author = user
     rev.message = _(u'REST API: Delete Package: %s') % entity.name
+
+    #avoid revisioning by updating directly
+    model.Session.query(model.Package).filter_by(id=entity.id).update(
+        {"metadata_modified": datetime.datetime.utcnow()})
+    model.Session.refresh(entity)
 
     for item in plugins.PluginImplementations(plugins.IPackageController):
         item.delete(entity)
