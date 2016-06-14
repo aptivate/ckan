@@ -72,11 +72,6 @@ def package_delete(context, data_dict):
     rev.author = user
     rev.message = _(u'REST API: Delete Package: %s') % entity.name
 
-    #avoid revisioning by updating directly
-    model.Session.query(model.Package).filter_by(id=entity.id).update(
-        {"metadata_modified": datetime.datetime.utcnow()})
-    model.Session.refresh(entity)
-
     for item in plugins.PluginImplementations(plugins.IPackageController):
         item.delete(entity)
 
