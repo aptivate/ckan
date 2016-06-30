@@ -465,9 +465,14 @@ def group_dictize(group, context,
         #munge here should not have an effect only doing it incase
         #of potential vulnerability of dodgy api input
         image_url = munge.munge_filename_legacy(image_url)
+
+        parsed = urlparse.urlparse(config.get('ckan.site_url', 'http://0.0.0.0'))
+
         result_dict['image_display_url'] = h.url_for_static(
             'uploads/group/%s' % result_dict.get('image_url'),
-            qualified=True
+            qualified=True,
+            host=str(parsed.netloc + parsed.path),
+            protocol=str(parsed.scheme)
         )
     return result_dict
 
@@ -781,4 +786,3 @@ def resource_view_list_dictize(resource_views, context):
     for view in resource_views:
         resource_view_dicts.append(resource_view_dictize(view, context))
     return resource_view_dicts
-
