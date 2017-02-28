@@ -156,6 +156,7 @@ entry_points = {
         'sample_datastore_plugin = ckanext.datastore.tests.sample_datastore_plugin:SampleDataStorePlugin',
         'test_datastore_view = ckan.tests.lib.test_datapreview:MockDatastoreBasedResourceView',
         'test_datapusher_plugin = ckanext.datapusher.tests.test_interfaces:FakeDataPusherPlugin',
+        'test_feed_plugin = ckan.tests.controllers.test_feed:MockFeedPlugin',
     ],
     'babel.extractors': [
         'ckan = ckan.lib.extract:extract_ckan',
