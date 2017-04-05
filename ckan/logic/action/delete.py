@@ -1,6 +1,5 @@
 '''API functions for deleting data from CKAN.'''
 
-import datetime
 import sqlalchemy as sqla
 
 import ckan.logic
